@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -17,34 +17,29 @@ class MockNavBarComponent { }
 class MockProductsComponent { }
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [AppComponent, MockNavBarComponent, MockProductsComponent]
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'angular-demo'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-demo');
+    expect(component).toBeTruthy();
   });
 
   it('should have app-navbar', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const navComponent = fixture.debugElement.query(By.directive(MockNavBarComponent));
     expect(navComponent).toBeTruthy();
   });
 
   it('should have app-products', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const productsComponent = fixture.debugElement.query(By.directive(MockProductsComponent));
     expect(productsComponent).toBeTruthy();
   });

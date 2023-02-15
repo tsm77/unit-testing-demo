@@ -11,9 +11,11 @@ import { ProductsComponent } from './products.component';
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
   let fixture: ComponentFixture<ProductsComponent>;
-  let dialog = jasmine.createSpyObj('MatDialog', ['open']);;
+
+  let dialog = jasmine.createSpyObj('MatDialog', ['open']);
   let matSnackBar = jasmine.createSpyObj('MatSnackbar', ['open']);
   let mockProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'deleteProduct']);
+
   mockProductService.getProducts.and.returnValue(of([]));
 
   beforeEach(async () => {
@@ -39,44 +41,47 @@ describe('ProductsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get product data initially', () => {
-    const response = [
-      {
-        id: '1',
-        title: 'Test Product',
-        description: 'Test description',
-        image: 'test-image.jpg',
-        price: '19.99',
-        category: 'Test category'
-      },
-      {
-        id: '2',
-        title: 'Test Product',
-        description: 'Test description',
-        image: 'test-image.jpg',
-        price: '19.99',
-        category: 'Test category'
-      }
-    ];
-    mockProductService.getProducts.and.returnValue(of(response));
+  describe('should test get products initially',() => {
 
-    component.ngOnInit();
-    expect(mockProductService.getProducts).toHaveBeenCalled();
-    expect(component.productData).toEqual(response);
-    expect(component.showSpinner).toBeFalse();
-  });
+    it('should get product data initially', () => {
+      const response = [
+        {
+          id: '1',
+          title: 'Test Product',
+          description: 'Test description',
+          price: '19.99',
+          category: 'Test category'
+        },
+        {
+          id: '2',
+          title: 'Test Product',
+          description: 'Test description',
+          price: '19.99',
+          category: 'Test category'
+        }
+      ];
+      mockProductService.getProducts.and.returnValue(of(response));
 
-  it('should get product data initially on failure', () => {
-    const error = new Error('Error deleting product');
-    mockProductService.getProducts.and.returnValue((throwError(() => error)));
-    component.ngOnInit();
+      component.getProducts();
 
-    expect(mockProductService.getProducts).toHaveBeenCalled();
-    expect(component.showSpinner).toBeFalse();
-    expect(matSnackBar.open).toHaveBeenCalledWith('Something went wrong!...', '', {
-      duration: 3000
+      expect(mockProductService.getProducts).toHaveBeenCalled();
+      expect(component.productData).toEqual(response);
+      expect(component.showSpinner).toBeFalse();
     });
-  })
+
+    it('should get product data initially on failure', () => {
+      const error = new Error('Error deleting product');
+      mockProductService.getProducts.and.returnValue((throwError(() => error)));
+
+      component.getProducts();
+
+      expect(mockProductService.getProducts).toHaveBeenCalled();
+      expect(component.showSpinner).toBeFalse();
+      expect(matSnackBar.open).toHaveBeenCalledWith('Something went wrong!...', '', {
+        duration: 3000
+      });
+    });
+  });
 
   it('should test openDialog', () => {
     component.openDialog();
@@ -88,7 +93,6 @@ describe('ProductsComponent', () => {
       id: '1',
       title: 'Test Product',
       description: 'Test description',
-      image: 'test-image.jpg',
       price: '19.99',
       category: 'Test category'
     };
@@ -96,41 +100,40 @@ describe('ProductsComponent', () => {
     expect(dialog.open).toHaveBeenCalledWith(AddProductComponent, { data: product, width: '40%' });
   });
 
-  it('should test deleteProduct on success', () => {
-    const product: Product = {
-      id: '1',
-      title: 'Test Product',
-      description: 'Test description',
-      image: 'test-image.jpg',
-      price: '19.99',
-      category: 'Test category'
-    };
-    mockProductService.deleteProduct.and.returnValue(of(product));
+  describe('should test deleteProduct', () => {
+    it('should test deleteProduct on success', () => {
+      const product: Product = {
+        id: '1',
+        title: 'Test Product',
+        description: 'Test description',
+        price: '19.99',
+        category: 'Test category'
+      };
+      mockProductService.deleteProduct.and.returnValue(of(product));
 
-    component.deleteProduct(product);
+      component.deleteProduct(product);
 
-    expect(matSnackBar.open).toHaveBeenCalledWith('Deleted Successfully!...', '', {
-      duration: 3000
+      expect(matSnackBar.open).toHaveBeenCalledWith('Deleted Successfully!...', '', {
+        duration: 3000
+      });
+    });
+
+    it('should test deleteProduct on failure', () => {
+      const product: Product = {
+        id: '1',
+        title: 'Test Product',
+        description: 'Test description',
+        price: '19.99',
+        category: 'Test category'
+      };
+      const error = new Error('Error deleting product');
+      mockProductService.deleteProduct.and.returnValue((throwError(() => error)));
+
+      component.deleteProduct(product);
+
+      expect(matSnackBar.open).toHaveBeenCalledWith('Something went wrong!...', '', {
+        duration: 3000
+      });
     });
   });
-
-  it('should test deleteProduct on failure', () => {
-    const product: Product = {
-      id: '1',
-      title: 'Test Product',
-      description: 'Test description',
-      image: 'test-image.jpg',
-      price: '19.99',
-      category: 'Test category'
-    };
-    const error = new Error('Error deleting product');
-    mockProductService.deleteProduct.and.returnValue((throwError(() => error)));
-
-    component.deleteProduct(product);
-
-    expect(matSnackBar.open).toHaveBeenCalledWith('Something went wrong!...', '', {
-      duration: 3000
-    });
-  });
-
 });

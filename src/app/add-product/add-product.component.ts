@@ -17,34 +17,31 @@ export class AddProductComponent implements OnInit {
   constructor(
     private productService: ProductsService,
     private snackbar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) private data: Product | undefined,
+    @Inject(MAT_DIALOG_DATA) private _data: Product,
     private dialogRef: MatDialogRef<AddProductComponent>
   ) { }
 
-  ngOnInit(): void {
-    this.productForm = new FormGroup({
-      title: new FormControl(this.data ? this.data.title : ''),
-      description: new FormControl(this.data ? this.data.description : ''),
-      image: new FormControl(this.data ? this.imageSrc = this.data.image : ''),
-      price: new FormControl(this.data ? this.data.price : ''),
-      category: new FormControl(this.data ? this.data.category : ''),
-    });
+  public get data(): Product {
+    return this._data;
   }
 
-  onFileSelected(event: any) {
-    if (event.target.files.length) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imageSrc = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+  public set data(d: Product) {
+    this._data = d;
+  }
+
+  ngOnInit(): void {
+    const hasData = Object.keys(this.data).length;
+    this.productForm = new FormGroup({
+      title: new FormControl(hasData ? this.data.title : ''),
+      description: new FormControl(hasData ? this.data.description : ''),
+      price: new FormControl(hasData ? this.data.price : ''),
+      category: new FormControl(hasData ? this.data.category : ''),
+    });
   }
 
   saveProduct() {
     const product = this.productForm.value as Product;
-    if (this.data) {
+    if (Object.keys(this.data).length) {
       product.id = this.data.id;
       this.productService.updateProduct(product).subscribe({
         next: (res) => {

@@ -22,6 +22,10 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts() {
     this.showSpinner = true;
     this.productService.getProducts().subscribe({
       next: (res) => {
@@ -31,7 +35,7 @@ export class ProductsComponent implements OnInit {
       error: (err) => {
         this.showSpinner = false;
         this.snackbar.open('Something went wrong!...', '', {
-          duration: 3000,
+          duration: 3000
         });
       }
     });
@@ -54,12 +58,12 @@ export class ProductsComponent implements OnInit {
     this.productService.deleteProduct(product.id).subscribe({
       next: (res) => {
         this.snackbar.open('Deleted Successfully!...', '', {
-          duration: 3000,
+          duration: 3000
         });
       },
       error: (error) => {
         this.snackbar.open('Something went wrong!...', '', {
-          duration: 3000,
+          duration: 3000
         });
       },
     });

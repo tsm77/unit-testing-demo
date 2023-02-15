@@ -28,7 +28,6 @@ describe('ProductsService', () => {
         id: '1',
         title: 'Test Product',
         description: 'Test description',
-        image: 'test-image.jpg',
         price: '19.99',
         category: 'Test category',
       },
@@ -36,11 +35,11 @@ describe('ProductsService', () => {
         id: '2',
         title: 'Test Product2',
         description: 'Test description',
-        image: 'test-image.jpg',
         price: '19.99',
         category: 'Test category',
-      },
+      }
     ];
+
     service.getProducts().subscribe((res) => {
       expect(res).toEqual(response);
     });
@@ -58,17 +57,16 @@ describe('ProductsService', () => {
       id: '1',
       title: 'Test Product',
       description: 'Test description',
-      image: 'test-image.jpg',
       price: '19.99',
       category: 'Test category',
     };
     const data = {
       title: 'Test Product2',
       description: 'Test description',
-      image: 'test-image.jpg',
       price: '19.99',
-      category: 'Test category',
+      category: 'Test category'
     };
+
     service.saveProduct(data).subscribe((res) => {
       expect(res).toEqual(response);
     });
@@ -86,7 +84,6 @@ describe('ProductsService', () => {
       id: '1',
       title: 'Test Product',
       description: 'Test description',
-      image: 'test-image.jpg',
       price: '19.99',
       category: 'Test category',
     };
@@ -94,7 +91,6 @@ describe('ProductsService', () => {
       id: '1',
       title: 'Test Product',
       description: 'Test description',
-      image: 'test-image.jpg',
       price: '19.99',
       category: 'Test category',
     };
@@ -116,7 +112,6 @@ describe('ProductsService', () => {
       id: '1',
       title: 'Test Product',
       description: 'Test description',
-      image: 'test-image.jpg',
       price: '19.99',
       category: 'Test category',
     };
