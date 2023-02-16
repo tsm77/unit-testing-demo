@@ -51,6 +51,21 @@ describe('AddProductComponent', () => {
     })
   });
 
+   it('should set imageSrc to the result of reading a selected file', () => {
+    const file = new File([], 'test-image.jpg');
+    const reader = jasmine.createSpyObj('FileReader', ['readAsDataURL', 'onload']);
+    reader.readAsDataURL.and.callFake(() => {
+      reader.onload({
+        target: { result: 'data:image/jpeg;base64,test-image-data' }
+        });
+    });
+    spyOn(window, 'FileReader').and.returnValue(reader);
+
+    component.onFileSelected({ target: { files: [file] } });
+     expect(reader.readAsDataURL).toHaveBeenCalledWith(file);
+    expect(component.imageSrc).toBe('data:image/jpeg;base64,test-image-data');
+  });
+
   describe('should test add product functionality', () => {
     it('should call the saveProduct to add new product', () => {
       const data: Product = {

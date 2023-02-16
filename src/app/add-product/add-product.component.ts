@@ -39,6 +39,17 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+    onFileSelected(event: any) {
+    if (event.target.files.length) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageSrc = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   saveProduct() {
     const product = this.productForm.value as Product;
     if (Object.keys(this.data).length) {
