@@ -43,4 +43,17 @@ describe('AppComponent', () => {
     const productsComponent = fixture.debugElement.query(By.directive(MockProductsComponent));
     expect(productsComponent).toBeTruthy();
   });
+
+  it('should test sum of two numbers', () => {
+
+    // Arrange
+    const a = 5;
+    const b = 5;
+
+    // Act
+    const total = component.add(a, b);
+
+    // Assert
+    expect(total).toEqual(10);
+  });
 });

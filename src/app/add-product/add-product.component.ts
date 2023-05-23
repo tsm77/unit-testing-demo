@@ -30,24 +30,13 @@ export class AddProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const hasData = Object.keys(this.data).length;
+    const hasData = this.data && Object.keys(this.data).length;
     this.productForm = new FormGroup({
       title: new FormControl(hasData ? this.data.title : ''),
       description: new FormControl(hasData ? this.data.description : ''),
       price: new FormControl(hasData ? this.data.price : ''),
       category: new FormControl(hasData ? this.data.category : ''),
     });
-  }
-
-    onFileSelected(event: any) {
-    if (event.target.files.length) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imageSrc = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
   }
 
   saveProduct() {

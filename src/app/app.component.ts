@@ -9,7 +9,7 @@ export class AppComponent {
 
   constructor() {}
 
-  greet() {
-    return 'Hello, Good afternoon!';
+  add(a: number, b: number) {
+    return a + b;
   }
 }
