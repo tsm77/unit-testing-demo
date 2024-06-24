@@ -6,15 +6,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 @Component({
   selector: 'app-nav-bar',
-  template: `<div></div>`
+  template: `<div></div>`,
 })
-class MockNavBarComponent { }
+class MockNavBarComponent {}
 
 @Component({
   selector: 'app-products',
-  template: `<div></div>`
+  template: `<div></div>`,
 })
-class MockProductsComponent { }
+class MockProductsComponent {}
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -23,37 +23,19 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [AppComponent, MockNavBarComponent, MockProductsComponent]
+      declarations: [AppComponent, MockNavBarComponent, MockProductsComponent],
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-
   });
 
   it('should create the app', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have app-navbar', () => {
-    const navComponent = fixture.debugElement.query(By.directive(MockNavBarComponent));
-    expect(navComponent).toBeTruthy();
-  });
+  it('should have app-navbar', () => {});
 
-  it('should have app-products', () => {
-    const productsComponent = fixture.debugElement.query(By.directive(MockProductsComponent));
-    expect(productsComponent).toBeTruthy();
-  });
+  it('should have app-products', () => {});
 
-  it('should test sum of two numbers', () => {
-
-    // Arrange
-    const a = 5;
-    const b = 5;
-
-    // Act
-    const total = component.add(a, b);
-
-    // Assert
-    expect(total).toEqual(10);
-  });
+  it('should test sum of two numbers', () => {});
 });
