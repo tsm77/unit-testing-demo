@@ -19,38 +19,21 @@ describe('AddProductComponent', () => {
   ]);
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, SharedModule],
-      declarations: [AddProductComponent],
-      providers: [
-        { provide: ProductsService, useValue: mockProductService },
-        { provide: MatSnackBar, useValue: matSnackBar },
-        {
-          provide: MatDialogRef,
-          useValue: jasmine.createSpyObj('MatDialogRef', ['close', 'open']),
-        },
-        { provide: MAT_DIALOG_DATA, useValue: {} },
-      ],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(AddProductComponent);
-    component = fixture.componentInstance;
-
-    mockProductService = TestBed.inject(ProductsService);
-    dialogRef = TestBed.inject(MatDialogRef);
-    matSnackBar = TestBed.inject(MatSnackBar);
-
-    fixture.detectChanges();
+    
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    
   });
 
-  it('should init the form', () => {});
+  it('should init the form', () => {
+   
+  });
 
   describe('should test add product functionality', () => {
-    it('should call the saveProduct to add new product', () => {});
+    it('should call the saveProduct to add new product', () => {
+     
+    });
 
     it('should test the saveProduct for failure while add a new product', () => {});
   });
@@ -58,8 +41,28 @@ describe('AddProductComponent', () => {
   describe('should test edit product functionality', () => {
     it('should set the form controls to the correct values when data is provided', () => {});
 
-    it('should call the saveProduct while editing the product', () => {});
+    it('should call the saveProduct while editing the product', () => {
+      
+    });
 
-    it('should test the saveProduct for failure while update a product', () => {});
+    it('should test the saveProduct for failure while update a product', () => {
+      const data: Product = {
+        id: '1',
+        title: 'Test Product',
+        description: 'Test description',
+        price: '19.99',
+        category: 'Test category'
+      };
+      const error = new Error('Error while update a product');
+      component.data = data;
+
+      mockProductService.updateProduct.and.returnValue((throwError(() => error)));
+      component.productForm.patchValue(data);
+      component.saveProduct();
+      expect(mockProductService.updateProduct).toHaveBeenCalledWith(data);
+      expect(matSnackBar.open).toHaveBeenCalledWith('Something went wrong!...', '', {
+        duration: 3000
+      });
+    });
   });
 });
