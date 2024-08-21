@@ -29,6 +29,11 @@ export class AddProductComponent implements OnInit {
     this._data = d;
   }
 
+  /**
+   * - Inicializa o formulário do produto.
+   * - Se houver dados, preenche os campos com eles caso o contrario, deixa os campos vazios.
+   * @author Tiago S Martins
+   */
   ngOnInit(): void {
     const hasData = this.data && Object.keys(this.data).length;
     this.productForm = new FormGroup({
@@ -39,6 +44,12 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  /**
+   * - Salva ou atualiza um produto baseado nos dados do formulário.
+   * - Se o this.data não estiver vazio, atualiza o produto existente, se não cria um novo produto.
+   * - Em caso de sucesso ou falha mostra uma mensagem em um snackbar com duração de 3 segundos.
+   * @author Tiago S Martins
+   */
   saveProduct() {
     const product = this.productForm.value as Product;
     if (Object.keys(this.data).length) {

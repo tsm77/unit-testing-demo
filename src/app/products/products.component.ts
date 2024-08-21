@@ -25,6 +25,12 @@ export class ProductsComponent implements OnInit {
     this.getProducts();
   }
 
+  /**
+  * - Função que busca uma lista de produtos.
+  * - Se a buscar for bem sucedida, ela salva os produtos em uma variavel e esconder o spinner.
+  * - Caso ocorra algum erro, ela esconde o spinner e mostra uma mensagem de erro em um snackbar.
+  * @author Tiago S Martins
+  */
   getProducts() {
     this.showSpinner = true;
     this.productService.getProducts().subscribe({
@@ -41,12 +47,23 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+ /**
+  * - Função abre um dialog para adicionar um novo produto.
+  * - É configurado para ter 40% de largura.
+  * @author Tiago S Martins
+  */
   openDialog() {
     this.dialog.open(AddProductComponent, {
       width: '40%',
     });
   }
 
+ /**
+  * - Abre um dialog para editar um produto existente.
+  * - É passado um produto selecionado como dados, permitindo que seja editado.
+  * - É configurado para ter 40% de largura.
+  * @author Tiago S Martins
+  */
   editProduct(product: Product) {
     this.dialog.open(AddProductComponent, {
       data: product,
@@ -54,6 +71,11 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+ /**
+  * - Excluir um produto, recebendo o seu id.
+  * - Em caso de sucesso ou falha mostra uma mensagem em um snackbar com duração de 3 segundos.
+  * @author Tiago S Martins
+  */
   deleteProduct(product: any) {
     this.productService.deleteProduct(product.id).subscribe({
       next: (res) => {
